@@ -1,12 +1,10 @@
-
 from matplotlib import pyplot as plt
 from matplotlib_venn import venn2
 
 def main():
-
     print("Union")
     print(union_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6, 7]))
-    venn2(([1, 2, 3, 4, 5], union_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6, 7])))
+    venn2(subsets=(1, 1, 1))
     plt.show()
 
     """print("Interseccion")
@@ -18,13 +16,6 @@ def main():
     print("Combinacion")
     print(combinacion_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6, 7]))"""
 
-def interseccion_conjuntos(conjunto1, conjunto2):
-    conjunto_interseccion = []
-    for elemento in conjunto1:
-        if elemento in conjunto2:
-            conjunto_interseccion.append(elemento)
-    return conjunto_interseccion
-
 
 def union_conjuntos(conjunto1, conjunto2):
     conjunto_union = []
@@ -35,6 +26,15 @@ def union_conjuntos(conjunto1, conjunto2):
             conjunto_union.append(elemento)
     return conjunto_union
 
+
+def interseccion_conjuntos(conjunto1, conjunto2):
+    conjunto_interseccion = []
+    for elemento in conjunto1:
+        if elemento in conjunto2:
+            conjunto_interseccion.append(elemento)
+    return conjunto_interseccion
+
+
 def diferencia_conjuntos(conjunto1, conjunto2):
     conjunto_diferencia = []
     for elemento in conjunto1:
@@ -42,12 +42,14 @@ def diferencia_conjuntos(conjunto1, conjunto2):
             conjunto_diferencia.append(elemento)
     return conjunto_diferencia
 
+
 def complemento_conjuntos(conjunto_universal, conjunto):
     conjunto_complemento = []
     for elemento in conjunto_universal:
         if elemento not in conjunto:
             conjunto_complemento.append(elemento)
     return conjunto_complemento
+
 
 def combinacion_conjuntos(conjunto1, conjunto2):
     conjunto_combinacion = []
