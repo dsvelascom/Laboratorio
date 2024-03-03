@@ -2,31 +2,36 @@ from matplotlib import pyplot as plt
 
 def main():
 
-    coso = union_conjuntos([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7])
-    coso2 = interseccion_conjuntos([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7])
-    coso3 = diferencia_conjuntos([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7])
-    coso4 = complemento_conjuntos([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 4, 5, 6, 7])
-    coso5 = combinacion_conjuntos([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7])
-    print(coso)
-    print(coso2)
-    print(coso3)
-    print(coso4)
-    print(coso5)
-    # diagrama_venn([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7])
-    #diagrama_venn_interseccion([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7])
-    diagrama_venn_interseccion_3([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7], [5, 6, 7, 8, 9, 10])
+    print(union_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6, 7]))
+
+    print(interseccion_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6, 7]))
+
+    print(diferencia_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6, 7]))
+
+    print(complemento_conjuntos([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 4, 5, 6, 7]))
+
+    print(combinacion_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6, 7]))
+
+    # diagrama_venn([1, 2, 3, 4, 5], [3, 4, 5, 6, 7])
+    # diagrama_venn_interseccion([1, 2, 3, 4, 5 ], [3, 4, 5, 6, 7])
+    # diagrama_venn_interseccion_3([1, 2, 3, 4, 5], [3, 4, 5, 6, 7], [5, 6, 7, 8, 9, 10])
+
+    print(cardinalidad_conjuntos([1, 2, 3, 4, 5], [3, 4, 5, 6]))
+
+    print(es_subconjunto([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]))
+
+    print(disjuntos_conjuntos([1, 2, 3], [4, 5, 6, 7]))
 
 
 #funcion para mostrar un diagrama de venn con dos conjuntos (union)
 def diagrama_venn(conjunto1, conjunto2):
-    fig = plt.figure(figsize=(10, 10) )
-    ax = fig.add_subplot(1,1,1)
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(1, 1, 1)
     ax.set_title("Diagrama de Venn")
     """
     en el scatter, en la x, mediante las comas ubicamos en donde y cuantos circulos queremos
     """
-    plt.scatter(x=[0,0.25], y=[0,0], s=150000, color=['red', 'blue'], alpha=0.3, vmax= 3, vmin=2)
-    
+    plt.scatter(x=[0, 0.25], y=[0, 0], s=150000, color=['red', 'blue'], alpha=0.3, vmax= 3, vmin=2)
 
     union = union_conjuntos(conjunto1, conjunto2)
 
@@ -39,7 +44,7 @@ def diagrama_venn(conjunto1, conjunto2):
     plt.text(x=-0.17, y=-0.03, s= conjunto_1, rotation = 50,fontsize=33, fontweight='bold', color='red')
     plt.text(x=0.25, y=-0.08, s= conjunto_2, rotation = -55,fontsize=33, fontweight='bold', color='blue')
     # union entre los dos conjuntos
-    plt.text(x=0.0, y=-0.15, s= union_resultado,fontsize=33,fontweight='bold', color='purple')
+    plt.text(x=0.0, y=-0.15, s= union,fontsize=33,fontweight='bold', color='purple')
 
     plt.xlim(-0.25, 0.5)
     plt.ylim(-0.4, 0.2)
@@ -71,16 +76,23 @@ def diagrama_venn_interseccion(conjunto1, conjunto2):
     plt.xlim(-0.3, 0.5)
     plt.ylim(-0.4, 0.4)
     plt.show()
+
 #funcion para mostar un diagrama de venn con tres conjuntos (interseccion)
 def diagrama_venn_interseccion_3(conjunto1, conjunto2, conjunto3):
-    fig = plt.figure(figsize=(10, 10) )
-    ax = fig.add_subplot(1,1,1)
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(1, 1, 1)
     ax.set_title("Diagrama de Venn")
     """
     en el scatter, en la x, mediante las comas ubicamos en donde y cuantos circulos queremos
     """
-    plt.scatter(x=[0,0.25, 0.12], y=[0,0,-0.3], s=100000, color=['red', 'blue', 'green'], alpha=0.3, vmax= 3, vmin=2)
-    
+    x = [0, 0.25, 0.12]
+    y = [0, 0, -0.3]
+
+    # Mapeo de colores
+    valores_de_color = [2, 3, 4]
+
+    # Gráfico de dispersión con mapeo de colores
+    plt.scatter(x=x, y=y, s=100000, c=valores_de_color, cmap='viridis', alpha=0.3, vmax=3, vmin=2)
 
     interseccionaux = interseccion_conjuntos(conjunto1, conjunto2)
     interseccion2aux = interseccion_conjuntos(conjunto1, conjunto3)
@@ -90,8 +102,6 @@ def diagrama_venn_interseccion_3(conjunto1, conjunto2, conjunto3):
     interseccion = diferencia_conjuntos(interseccionaux, interseccion_todos)
     interseccion2 = diferencia_conjuntos(interseccion2aux, interseccion_todos)
     interseccion3 = diferencia_conjuntos(interseccion3aux, interseccion_todos)
-
-
 
     #restar el conjunto 1 de la interseccion de todos
     conjunto_1 = array_to_string( diferencia_conjuntos(conjunto1, conjunto2, conjunto3, interseccion_todos))
@@ -117,13 +127,6 @@ def diagrama_venn_interseccion_3(conjunto1, conjunto2, conjunto3):
     plt.ylim(-0.6, 0.3)
     plt.show()
 
-#funcion para pasar un array a un string
-def array_to_string(array):
-    string = ""
-    for element in array:
-        string += str(element)
-    return string
-
 #funcion para union de conjuntos de n cantidad
 def union_conjuntos(*conjuntos):
     conjunto_union = []
@@ -143,7 +146,6 @@ def interseccion_conjuntos(*conjuntos):
         conjunto_interseccion = [elemento for elemento in conjunto_interseccion if elemento in conjunto]
     return conjunto_interseccion
 
-
 #funcion para diferencia de conjuntos de n cantidad
 def diferencia_conjuntos(*conjuntos):
     if len(conjuntos) < 2:
@@ -153,7 +155,6 @@ def diferencia_conjuntos(*conjuntos):
     for conjunto in conjuntos[1:]:
         conjunto_diferencia = [elemento for elemento in conjunto_diferencia if elemento not in conjunto]
     return conjunto_diferencia
-
 
 #funcion para complemento de conjuntos de n cantidad
 def complemento_conjuntos(conjunto_universo, conjunto):
@@ -173,5 +174,32 @@ def combinacion_conjuntos(conjunto1, conjunto2):
         if elemento not in conjunto_combinacion:
             conjunto_combinacion.append(elemento)
     return conjunto_combinacion
+
+#funcion para cardinalidad de conjuntos de n cantidad
+def cardinalidad_conjuntos(*conjuntos):
+    return [len(conjunto) for conjunto in conjuntos]
+
+#funcion para saber si un conjunto es subconjunto de otro
+def es_subconjunto(conjunto1, conjunto2):
+    for elemento in conjunto1:
+        if elemento not in conjunto2:
+            return False
+    return True
+
+#funcion para Disjuntos de n cantidad
+def disjuntos_conjuntos(*conjuntos):
+    for conjunto in conjuntos:
+        for elemento in conjunto:
+            for conjunto2 in conjuntos:
+                if conjunto != conjunto2 and elemento in conjunto2:
+                    return False
+    return True
+
+#funcion para pasar un array a un string
+def array_to_string(array):
+    string = ""
+    for element in array:
+        string += str(element)
+    return string
 
 main()
